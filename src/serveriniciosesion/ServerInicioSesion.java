@@ -5,6 +5,11 @@
  */
 package serveriniciosesion;
 
+import validaciones.IniciarSesionInterface;
+import java.rmi.registry.Registry;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.server.UnicastRemoteObject;
+
 /**
  *
  * @author Mari
@@ -16,6 +21,16 @@ public class ServerInicioSesion {
     */
    public static void main(String[] args) {
       // TODO code application logic here
+       try {
+      IniciarSesion is = new IniciarSesion();
+      IniciarSesionInterface stub = (IniciarSesionInterface) UnicastRemoteObject.exportObject(is, 0);
+      Registry registry = LocateRegistry.getRegistry();
+      registry.bind("Inicio sesión", stub);
+      System.out.println("Servidor listo");
+    } catch (Exception e) {
+      System.out.println("Exception: " + e.getMessage());
+    }
    }
    
+
 }
